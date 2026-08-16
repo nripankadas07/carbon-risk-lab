@@ -9,7 +9,7 @@ Research reviewed on 2026-08-16. These primary sources informed the risk categor
 | [ICVCM Core Carbon Principles Assessment Framework](https://icvcm.org/assessment-framework/) | Integrity is multi-dimensional; a portfolio tool should expose assumptions rather than collapse project quality into a hidden number. |
 | [Verra VCS Program Details](https://verra.org/programs/verified-carbon-standard/vcs-program-details/) | Issuance, monitoring/verification, registry processes, and reversal treatment are distinct lifecycle concerns. |
 | [World Bank State and Trends of Carbon Pricing](https://www.worldbank.org/en/publication/state-and-trends-of-carbon-pricing) | Carbon pricing instruments and crediting mechanisms exist in heterogeneous policy and market contexts; price should be a scenario input, not a universal constant. |
-| [Rockafellar and Uryasev publication list](https://uryasev.ams.stonybrook.edu/publications/) | VaR describes a quantile threshold while CVaR/expected shortfall summarizes loss beyond a tail threshold; both should be reported with clear confidence levels. |
+| [Rockafellar and Uryasev, “Optimization of Conditional Value-at-Risk”](https://doi.org/10.21314/JOR.2000.038) | VaR describes a quantile threshold while CVaR/expected shortfall summarizes loss beyond a tail threshold; both should be reported with clear confidence levels. |
 
 ## Deliberate differentiation
 

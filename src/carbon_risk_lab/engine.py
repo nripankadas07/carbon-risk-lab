@@ -27,16 +27,46 @@ def _finite(value: float, label: str) -> float:
 def percentile(values: List[float], probability: float) -> float:
     if not values:
         raise ValueError("percentile requires values")
-    if not 0.0 <= probability <= 1.0:
+    if isinstance(probability, bool) or not isinstance(probability, (int, float)):
         raise ValueError("probability must be between zero and one")
-    ordered = sorted(values)
-    index = (len(ordered) - 1) * probability
+    try:
+        normalized_probability = float(probability)
+    except OverflowError as exc:
+        raise ValueError("probability must be between zero and one") from exc
+    if not math.isfinite(normalized_probability) or not 0.0 <= normalized_probability <= 1.0:
+        raise ValueError("probability must be between zero and one")
+    ordered: List[float] = []
+    for value in values:
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            raise ValueError("percentile values must be finite numbers")
+        try:
+            normalized = float(value)
+        except OverflowError as exc:
+            raise ValueError("percentile values must be finite numbers") from exc
+        if not math.isfinite(normalized):
+            raise ValueError("percentile values must be finite numbers")
+        ordered.append(normalized)
+    ordered.sort()
+    index = (len(ordered) - 1) * normalized_probability
     lower = int(math.floor(index))
     upper = int(math.ceil(index))
     if lower == upper:
         return ordered[lower]
     weight = index - lower
-    return ordered[lower] * (1.0 - weight) + ordered[upper] * weight
+    lower_value = ordered[lower]
+    upper_value = ordered[upper]
+    if lower_value == upper_value:
+        return lower_value
+    if lower_value < 0.0 < upper_value:
+        # Avoid overflowing ``upper - lower`` for opposite-sign finite
+        # endpoints while retaining a convex interpolation.
+        interpolated = lower_value * (1.0 - weight) + upper_value * weight
+    else:
+        interpolated = lower_value + (upper_value - lower_value) * weight
+    return _finite(
+        interpolated,
+        "percentile interpolation",
+    )
 
 
 def _correlated_normal(rng: random.Random, common: float, correlation: float) -> float:

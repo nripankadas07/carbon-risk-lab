@@ -10,12 +10,14 @@ Simple portfolio demos multiply units by a spot price and hide the path risks th
 
 ## Proof
 
-- Dedicated `random.Random(seed)` streams make runs replayable.
+- Dedicated `random.Random(seed)` streams make runs replayable when the inputs and Python runtime are held identical.
+- The checked-in golden demo is byte-stable on both supported CI runtimes (Python 3.9 and 3.12); arbitrary floating-point portfolios should still record their exact runtime for provenance.
 - Common market, physical, policy, and counterparty factors create correlated rather than independent scenarios.
 - Reports include percentiles, loss VaR/CVaR at 95% and 99%, event rates, position expectations, and four controlled sensitivities.
 - Inputs and outputs use stable `1.0.0` schemas.
 - Portfolio readers require exact root and position fields, strict JSON types, and non-empty identifiers and labels; they never coerce booleans, strings, arrays, or objects into numbers or text.
 - JSON, Markdown, and single-file HTML are emitted from the same artifact.
+- Report bundles are staged and rolled back as a set; cooperating writers hold an exclusive advisory directory lock so their files cannot mix, and output-directory links and pre-existing report links are rejected rather than followed.
 - Runtime and tests use only Python 3.9+ standard-library modules.
 
 ## 60-second demo
@@ -76,6 +78,12 @@ This is a transparent scenario laboratory, not a valuation, registry, verificati
 make test
 make demo
 make golden
+python -m pip install build==1.4.4
+release_dir="$(mktemp -d)"
+python -m build --sdist --outdir "$release_dir"
+python scripts/check_sdist.py "$release_dir"/*.tar.gz
 ```
+
+The source-distribution check rejects unsafe or cache/build entries, verifies that examples and golden fixtures are present, extracts the archive, and runs its complete embedded test suite.
 
 MIT licensed.

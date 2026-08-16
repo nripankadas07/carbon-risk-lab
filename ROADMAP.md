@@ -1,6 +1,6 @@
 # Roadmap
 
-Carbon Risk Lab is at `0.1.0`. The immediate goal is stronger model transparency and validation, not more synthetic precision.
+Carbon Risk Lab is at `0.1.1`. The immediate goal is stronger model transparency and validation, not more synthetic precision.
 
 ## 0.2 — Assumption diagnostics
 

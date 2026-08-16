@@ -111,7 +111,7 @@
   },
   "generator": {
     "name": "carbon-risk-lab",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "metrics": {
     "baseline_value": 1136315.0,
