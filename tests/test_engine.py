@@ -15,6 +15,57 @@ from carbon_risk_lab.model import Portfolio, Position, build_demo_portfolio
 class EngineTests(unittest.TestCase):
     def test_percentile_interpolates(self):
         self.assertEqual(percentile([0.0, 10.0], 0.5), 5.0)
+        self.assertEqual(percentile([-1e308, 1e308], 0.5), 0.0)
+
+    def test_percentile_plateau_never_overshoots_the_maximum(self):
+        plateau = 116896570.06526269
+        values = [plateau] * 200
+        result = percentile(values, 0.95)
+        self.assertEqual(result, plateau)
+        self.assertTrue(any(value >= result for value in values))
+
+    def test_percentile_rejects_non_finite_and_oversized_values(self):
+        cases = [
+            ([float("nan")], 0.5),
+            ([float("inf")], 0.5),
+            ([10 ** 400], 0.5),
+            ([1.0], 10 ** 400),
+            ([True], 0.5),
+        ]
+        for values, probability in cases:
+            with self.subTest(values=values, probability=probability):
+                with self.assertRaises(ValueError):
+                    percentile(values, probability)
+
+    def test_repeated_maximum_loss_distribution_has_a_cvar_tail(self):
+        portfolio = Portfolio(
+            "repeated-maximum-loss",
+            "SYN",
+            [
+                Position(
+                    "p",
+                    "synthetic",
+                    "synthetic",
+                    1.0,
+                    116896570.06526269,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                )
+            ],
+        )
+        metrics = run_monte_carlo(
+            portfolio, simulations=200, seed=120021, sensitivities=False
+        )["metrics"]
+        self.assertEqual(metrics["loss_var_95"], metrics["baseline_value"])
+        self.assertEqual(metrics["loss_cvar_95"], metrics["baseline_value"])
 
     def test_seeded_run_is_deterministic(self):
         portfolio = build_demo_portfolio()
