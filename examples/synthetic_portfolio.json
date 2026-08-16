@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "artifact_type": "carbon-risk-lab.portfolio",
+  "portfolio_id": "synthetic-example-carbon-book",
+  "currency": "SYN-USD",
+  "annual_delivery_discount_rate": 0.08,
+  "synthetic_notice": "Every value is synthetic demonstration data, not a current market fact, valuation, forecast, or investment recommendation.",
+  "positions": [
+    {
+      "position_id": "SYN-FOR-EX",
+      "project_type": "afforestation",
+      "synthetic_geography": "Synthetic Highland North",
+      "units": 18000,
+      "base_price": 18.0,
+      "issuance_probability": 0.91,
+      "reversal_probability": 0.09,
+      "counterparty_default_probability": 0.035,
+      "delivery_delay_mean_months": 4.0,
+      "delivery_delay_volatility_months": 2.0,
+      "policy_haircut_mean": 0.08,
+      "price_volatility": 0.24,
+      "market_correlation": 0.60,
+      "physical_correlation": 0.66,
+      "counterparty_correlation": 0.30
+    },
+    {
+      "position_id": "SYN-MET-EX",
+      "project_type": "methane capture",
+      "synthetic_geography": "Synthetic Basin East",
+      "units": 13000,
+      "base_price": 23.0,
+      "issuance_probability": 0.95,
+      "reversal_probability": 0.025,
+      "counterparty_default_probability": 0.055,
+      "delivery_delay_mean_months": 2.0,
+      "delivery_delay_volatility_months": 1.2,
+      "policy_haircut_mean": 0.06,
+      "price_volatility": 0.20,
+      "market_correlation": 0.52,
+      "physical_correlation": 0.28,
+      "counterparty_correlation": 0.48
+    }
+  ]
+}

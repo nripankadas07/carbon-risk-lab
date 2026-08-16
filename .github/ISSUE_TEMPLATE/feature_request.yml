@@ -1,0 +1,15 @@
+name: Feature request
+description: Propose a risk factor or workflow
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and intended user
+    validations:
+      required: true
+  - type: textarea
+    id: model
+    attributes:
+      label: Proposed assumptions and validation evidence
+    validations:
+      required: true

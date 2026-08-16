@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use Carbon Risk Lab, please cite this software."
+title: "Carbon Risk Lab"
+type: software
+authors:
+  - family-names: "Das"
+    given-names: "Nripanka"
+repository-code: "https://github.com/nripankadas07/carbon-risk-lab"
+url: "https://github.com/nripankadas07/carbon-risk-lab"
+version: "0.1.0"
+date-released: "2026-08-16"
+license: MIT
+keywords:
+  - carbon credits
+  - Monte Carlo
+  - risk
+  - CVaR
+  - climate finance
