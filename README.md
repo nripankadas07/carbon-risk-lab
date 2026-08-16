@@ -78,7 +78,7 @@ This is a transparent scenario laboratory, not a valuation, registry, verificati
 make test
 make demo
 make golden
-python -m pip install build==1.5.0
+python -m pip install build==1.4.4
 release_dir="$(mktemp -d)"
 python -m build --sdist --outdir "$release_dir"
 python scripts/check_sdist.py "$release_dir"/*.tar.gz
